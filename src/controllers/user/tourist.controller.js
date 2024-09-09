@@ -25,16 +25,14 @@ const generateAccessAndRefereshTokens = async (touristId) =>{
 
 const RegisterTourist = asyncHandler( async ( req, res) => {
 
-    const { fullName, email,phone, password, role} = req.body;
+    const { fullName, email, password, role} = req.body;
     console.log("tourist data :- ", fullName,email,password);
 
     if([fullName,email,phone,password].some((field) => field.trim() === "")){
         throw new ApiError(400, "All Fields are required")
     }
 
-    const existedTourist = await Tourist.findOne({
-        $or: [{ phone }, { email }]
-    })
+    const existedTourist = await Tourist.findOne( { email })
 
 
     if (existedTourist) {
@@ -54,7 +52,6 @@ const RegisterTourist = asyncHandler( async ( req, res) => {
     const tourist = await Tourist.create({
         fullName,
         email,
-        phone,
         password,
         profile_pic: profile_pic?.url || "",
         role
