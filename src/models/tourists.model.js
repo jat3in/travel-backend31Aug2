@@ -27,7 +27,7 @@ const TouristSchema = Schema({
     },
     phone: {
         type: Number,
-        required: true,
+       
         
     },
     travel_preferences : [{
